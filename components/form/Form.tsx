@@ -23,17 +23,25 @@ const Form = ({
 }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [completed, setCompleted] = useState<boolean>(false);
-  const [uidInput, setUidInput] = useState<string>('');
+  const [usernameInput, setUsernameInput] = useState<string>('');
 
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
       if (e.target instanceof HTMLFormElement) {
         e.preventDefault();
-        const { host, port, region } = config;
+        // const { host, port, region } = config;
         try {
           setLoading(true);
           await fetch(
-            `http://${host}:${port}/api?region=${region}&ticket=GM&cmd=1116&uid=${uidInput}&msg=${commandInputValue}`
+            // `http://${host}:${port}/api?region=${region}&ticket=GM&cmd=1116&uid=${uidInput}&msg=${commandInputValue}`
+            window.location.origin + '/api/select-by-id',
+            {
+              method: 'POST',
+              body: JSON.stringify({
+                username: usernameInput,
+                msg: commandInputValue,
+              }),
+            }
           );
         } catch (error) {
           console.error(error);
@@ -46,7 +54,7 @@ const Form = ({
         }
       }
     },
-    [commandInputValue, uidInput]
+    [commandInputValue, usernameInput]
   );
 
   return (
@@ -57,13 +65,13 @@ const Form = ({
     >
       <div className='mb-4'>
         <Input
-          type='number'
+          type='text'
           id='uid'
           className='block w-full border px-6 py-4 rounded-full focus:outline-none'
-          placeholder='UID you want send commands to'
+          placeholder='username you want send commands to'
           required
-          value={uidInput}
-          setState={setUidInput}
+          value={usernameInput}
+          setState={setUsernameInput}
         />
         <Input
           type='text'
