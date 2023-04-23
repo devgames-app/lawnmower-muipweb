@@ -10,7 +10,7 @@ export default async function handler(
     try {
       const { username, msg } = JSON.parse(req.body);
       const query =
-        'SELECT * FROM `accounts` WHERE username LIKE ' + `'${username}'`;
+        'SELECT * FROM `accounts` WHERE `username` = ' + `'${username}'`;
       const user = new User();
       user.getUidByUsername(query, msg);
       res.status(200).json('sent');
