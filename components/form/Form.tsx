@@ -1,4 +1,3 @@
-import { config } from '@/src/config';
 import React, {
   Dispatch,
   FormEvent,
@@ -29,20 +28,15 @@ const Form = ({
     async (e: FormEvent) => {
       if (e.target instanceof HTMLFormElement) {
         e.preventDefault();
-        // const { host, port, region } = config;
         try {
           setLoading(true);
-          await fetch(
-            // `http://${host}:${port}/api?region=${region}&ticket=GM&cmd=1116&uid=${uidInput}&msg=${commandInputValue}`
-            window.location.origin + '/api/select-by-id',
-            {
-              method: 'POST',
-              body: JSON.stringify({
-                username: usernameInput,
-                msg: commandInputValue,
-              }),
-            }
-          );
+          await fetch(window.location.origin + '/api/select-by-id', {
+            method: 'POST',
+            body: JSON.stringify({
+              username: usernameInput,
+              msg: commandInputValue,
+            }),
+          });
         } catch (error) {
           console.error(error);
         } finally {
