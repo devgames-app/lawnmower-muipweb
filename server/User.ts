@@ -1,6 +1,6 @@
 import { MysqlError } from 'mysql';
 import { Db } from './DbConnection';
-import { IDbUsers } from '@/types/dbUsers';
+import { IDbUser } from '@/types/dbUsers';
 
 export class User extends Db {
   public constructor() {
@@ -22,7 +22,7 @@ export class User extends Db {
       this.getConnection();
       this.connection.query(
         query,
-        (err: MysqlError, response: IDbUsers[] | null) => {
+        (err: MysqlError, response: IDbUser[] | null) => {
           if (err) throw err;
           if (!response) throw err;
           if (response && !response.length) throw new Error('User not Found');
